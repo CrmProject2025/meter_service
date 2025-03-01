@@ -14,8 +14,6 @@ import com.example.meter2_service.dtos.KafkaDto;
 
 import com.example2.library_kafka_dtos.KafkaEventMy;
 
-
-
 @Service
 public class KafkaServiceImpl implements KafkaService {
 
