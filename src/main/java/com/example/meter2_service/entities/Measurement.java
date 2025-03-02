@@ -1,5 +1,6 @@
 package com.example.meter2_service.entities;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -7,7 +8,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,21 +24,48 @@ public class Measurement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    // приходит с другого сервера
     @Column(nullable = false)
-    private int value;
+    private long meterId;
 
-    // приходит с другого сервера
+    @Column(precision = 10, scale = 3, nullable = false)
+    private BigDecimal currentFlowRate;
+
+    @Column(precision = 10, scale = 3, nullable = false)
+    private BigDecimal averageDailyConsumption;
+
+    @Column(precision = 6, scale = 3, nullable = false)
+    private BigDecimal gasPressure;
+
+    @Column(precision = 5, scale = 2, nullable = false)
+    private BigDecimal gasTemperature;
+
     @Column(nullable = false)
-    private long meter_id;
+    private boolean valveStatus;
 
-    // приходит с другого сервера
+    @Column(length = 255, nullable = false)
+    private String errorCode;
+
     @Column(nullable = false)
-    private LocalDateTime measurementDate;
+    private LocalDateTime measurementDateTime;
 
-    public Measurement(int value, long meter_id, LocalDateTime measurementDate) {
-        this.value = value;
-        this.measurementDate = measurementDate;
+    private LocalDateTime recordingToDbDateTime;
+
+    @PrePersist
+    private void init() {
+        recordingToDbDateTime = LocalDateTime.now();
+    }
+
+    public Measurement(long meterId, BigDecimal currentFlowRate, BigDecimal averageDailyConsumption,
+            BigDecimal gasPressure, BigDecimal gasTemperature, boolean valveStatus, String errorCode,
+            LocalDateTime measurementDateTime) {
+        this.meterId = meterId;
+        this.currentFlowRate = currentFlowRate;
+        this.averageDailyConsumption = averageDailyConsumption;
+        this.gasPressure = gasPressure;
+        this.gasTemperature = gasTemperature;
+        this.valveStatus = valveStatus;
+        this.errorCode = errorCode;
+        this.measurementDateTime = measurementDateTime;
     }
 
     public Measurement() {
@@ -65,8 +95,8 @@ public class Measurement {
 
     @Override
     public String toString() {
-        return "Measurement [id=" + id + ", value=" + value + ", measurementDate=" + measurementDate + ", meter="
-                + meter_id + "]";
+        return "Measurement [id=" + id + ", meter_id=" + meterId + ", current_flow_rate=" + currentFlowRate
+                + ", error_code=" + errorCode + "]";
     }
 
 }
