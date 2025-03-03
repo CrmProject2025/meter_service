@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,35 +15,29 @@ import lombok.Data;
 @AllArgsConstructor
 public class MeasurementCreatedEventDto {
 
-    @NotBlank
-    private Long id;
-
-    @NotBlank
+    @NotNull
     private Long meterId;
 
-    @NotBlank
+    @NotNull
     private BigDecimal currentFlowRate;
 
-    @NotBlank
+    @NotNull
     private BigDecimal averageDailyConsumption;
 
-    @NotBlank
+    @NotNull
     private BigDecimal gasPressure;
 
-    @NotBlank
+    @NotNull
     private BigDecimal gasTemperature;
 
-    @NotBlank
+    @NotNull
     private Boolean valveStatus;
 
     @NotBlank
     @Size(min = 0, max = 255)
     private String errorCode;
 
-    @NotBlank
+    @NotNull
     private LocalDateTime measurementDateTime;
-
-    @NotBlank
-    private LocalDateTime recordingToDbDateTime;
 
 }

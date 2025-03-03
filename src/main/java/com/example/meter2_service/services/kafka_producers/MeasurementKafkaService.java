@@ -6,6 +6,6 @@ import com.example.meter2_service.dtos.MeasurementCreatedEventDto;
 
 public interface MeasurementKafkaService {
 
-    Long MeasurementSendToTopic(MeasurementCreatedEventDto measurementCreatedEventDto) throws InterruptedException, ExecutionException;
+    Long MeasurementSendToTopic(Long MeasurementId, MeasurementCreatedEventDto measurementCreatedEventDto) throws InterruptedException, ExecutionException;
 
 }

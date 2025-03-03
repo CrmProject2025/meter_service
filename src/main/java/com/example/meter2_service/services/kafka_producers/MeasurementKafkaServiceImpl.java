@@ -24,11 +24,11 @@ public class MeasurementKafkaServiceImpl implements MeasurementKafkaService {
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public Long MeasurementSendToTopic(MeasurementCreatedEventDto measurementCreatedEventDto)
+    public Long MeasurementSendToTopic(Long MeasurementId, MeasurementCreatedEventDto measurementCreatedEventDto)
             throws InterruptedException, ExecutionException {
 
         MeasurementCreatedEventKafkaDto measurementCreatedEventKafkaDto = MeasurementCreatedEventKafkaDto
-                .builder().id(measurementCreatedEventDto.getId())
+                .builder().id(MeasurementId)
                 .meterId(measurementCreatedEventDto.getMeterId())
                 .currentFlowRate(measurementCreatedEventDto.getCurrentFlowRate())
                 .averageDailyConsumption(measurementCreatedEventDto.getAverageDailyConsumption())
@@ -36,8 +36,7 @@ public class MeasurementKafkaServiceImpl implements MeasurementKafkaService {
                 .gasTemperature(measurementCreatedEventDto.getGasTemperature())
                 .errorCode(measurementCreatedEventDto.getErrorCode())
                 .measurementDateTime(measurementCreatedEventDto.getMeasurementDateTime())
-                // .valveStatus(measurementCreatedEventDto.getValveStatus())
-                .recordingToDbDateTime(measurementCreatedEventDto.getRecordingToDbDateTime())
+                .valveStatus(measurementCreatedEventDto.getValveStatus())
                 .build();
 
         SendResult<Long, MeasurementCreatedEventKafkaDto> result = kafkaTemplate.send("topic-measurement",

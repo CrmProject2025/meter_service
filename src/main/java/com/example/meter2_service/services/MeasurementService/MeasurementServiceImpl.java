@@ -12,11 +12,12 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class MeasurementServiceImpl {
+public class MeasurementServiceImpl implements MeasurementService {
     private MeasurementRepository measurementRepository;
     private static final Logger logger = LoggerFactory.getLogger(MeasurementServiceImpl.class);
 
-    void createMeasurement(MeasurementCreatedEventDto measurementCreatedEventDto) {
+    @Override
+    public Long createMeasurement(MeasurementCreatedEventDto measurementCreatedEventDto) {
         Measurement measurement = new Measurement(measurementCreatedEventDto.getMeterId(),
                 measurementCreatedEventDto.getCurrentFlowRate(),
                 measurementCreatedEventDto.getAverageDailyConsumption(),
@@ -25,8 +26,8 @@ public class MeasurementServiceImpl {
                 measurementCreatedEventDto.getValveStatus(),
                 measurementCreatedEventDto.getErrorCode(),
                 measurementCreatedEventDto.getMeasurementDateTime());
-
+        Measurement savedMeasurement = measurementRepository.save(measurement);
         logger.info("Creating measurement for meter(id): {}", measurementCreatedEventDto.getMeterId());
-
+        return savedMeasurement.getId();
     }
 }

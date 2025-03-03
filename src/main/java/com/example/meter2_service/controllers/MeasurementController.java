@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.meter2_service.dtos.MeasurementCreatedEventDto;
 import com.example.meter2_service.repositories.MeasurementRepository;
 import com.example.meter2_service.services.MeasurementService.MeasurementService;
+import com.example.meter2_service.services.MeasurementService.MeasurementServiceImpl;
 import com.example.meter2_service.services.kafka_producers.MeasurementKafkaService;
 
 import jakarta.validation.Valid;
@@ -22,17 +23,19 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class MeasurementController {
     private MeasurementKafkaService measurementKafkaService;
-    private MeasurementService measurementService;
+    private MeasurementServiceImpl measurementServiceImpl;
 
     @PostMapping("/measurement")
     public ResponseEntity<String> postMethodName(
             @Valid @RequestBody MeasurementCreatedEventDto measurementCreatedEventDto)
             throws InterruptedException, ExecutionException {
 
-        // обработка исключений здесь или в сервисах, логирование, документация в коде над методами
-        // логично перенести логику кафка в сервис по работе с сущность, сделать доп метод
-        measurementService.createMeasurement(measurementCreatedEventDto);
-        measurementKafkaService.MeasurementSendToTopic(measurementCreatedEventDto);
+        // обработка исключений здесь или в сервисах, логирование, документация в коде
+        // над методами
+        // логично перенести логику кафка в сервис по работе с сущность, сделать доп
+        // метод
+        Long measurementId = measurementServiceImpl.createMeasurement(measurementCreatedEventDto);
+        measurementKafkaService.MeasurementSendToTopic(measurementId, measurementCreatedEventDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Measurement recording");
     }
