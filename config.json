@@ -1,0 +1,9 @@
+{
+	"auths": {
+	"https://maven.pkg.github.com": {
+      "auth": "VGV3b3JrMTIzOmdocF9QV2VCUXJRaFo4dzNMaTY2ZUFyZDRWd0dKVVB5YzMzNjY2TXU="
+    }
+},
+	"credsStore": "desktop",
+	"currentContext": "desktop-linux"
+}

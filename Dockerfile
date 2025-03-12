@@ -1,5 +1,9 @@
 # 1️⃣ Этап сборки (Build Stage)
 FROM maven:3.9.9-eclipse-temurin-21 AS build  
+
+# Копируем config.json в нужное место
+COPY config.json /root/.docker/config.json
+
 WORKDIR /app
 
 # Копируем pom.xml и загружаем зависимости (кешируем, чтобы ускорить сборку)
