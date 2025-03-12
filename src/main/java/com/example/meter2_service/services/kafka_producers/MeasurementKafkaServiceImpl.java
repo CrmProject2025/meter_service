@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,18 @@ import com.example2.library_kafka_dtos.MeasurementCreatedEventKafkaDto;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
+// @RequiredArgsConstructor
 public class MeasurementKafkaServiceImpl implements MeasurementKafkaService {
 
+    // @Qualifier("kafkaTemplateMeasurement")
     private final KafkaTemplate<Long, MeasurementCreatedEventKafkaDto> kafkaTemplate;
+
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
+    public MeasurementKafkaServiceImpl(
+            @Qualifier("kafkaTemplateMeasurement") KafkaTemplate<Long, MeasurementCreatedEventKafkaDto> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
 
     @Override
     public Long MeasurementSendToTopic(Long MeasurementId, MeasurementCreatedEventDto measurementCreatedEventDto)

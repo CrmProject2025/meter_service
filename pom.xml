@@ -31,6 +31,11 @@
 		<java.version>21</java.version>
 	</properties>
 	<dependencies>
+			<dependency>
+			<groupId>com.example2</groupId>
+			<artifactId>library_kafka_dtos</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
@@ -118,13 +123,17 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>com.example2</groupId>
-			<artifactId>library_kafka_dtos</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+
 
 	</dependencies>
+	<repositories>
+
+		<repository>
+			<id>github</id>
+			<url>https://maven.pkg.github.com/CrmProject2025/library_kafka_dtos</url>
+		</repository>
+	</repositories>
+
 
 	<build>
 		<plugins>
